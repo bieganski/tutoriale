@@ -1,0 +1,70 @@
+wpisz git init
+
+nie znaleziono polecenia? aby móc używać komendy 'git', należy zainstalować program git
+
+apt install git
+
+nie wszystkie polecenia są możliwe do wykonania "od ręki", niektóre wymagają praw administratora (super user)
+
+sudo apt install git
+
+sudo apt install nano
+
+sudo apt install tig (łatwo zapamiętać, 'git' od tyłu)
+
+
+------------------------------------------------------------------
+
+wpisz nano testowy.txt
+
+uruchomi ci się edytor nano, podstawowe skróty to Zapisz (Ctrl + O) i Wyjdź (Ctrl + X).
+Po zapisaniu utworzy się plik testowy.txt (albo nadpisze, jeśli wcześniej takowy istniał).
+
+
+teraz utworzymy skryt bashowy.
+
+stwórz w nano plik o nazwie skrypt.sh, o treści:
+
+#!/bin/bash
+echo "jestem skryptem"
+echo "a ty?"
+
+wyjdź z nano i sprawdź, czy jego treść jest w porządku (cat skrypt.sh).
+
+uruchom skrypt za pomocą komendy  ./skrypt.sh
+
+udało się? domyślnie pliki mają prawa w+r, czyli write and read.
+aby móc uruchamiać pliki, należy jeszcze dodać im prawo x (eXecute)
+
+chmod +x skrypt.sh
+
+./skrypt.sh
+
+utwórz teraz plik pytong.py, o treści
+
+import sys
+print(sys.path)
+
+i spróbuj go uruchomić.
+
+nie da się, bowiem domyślnie używany jest interpreter basha.
+
+spróbuj
+
+python3 pytong.py    (możliwe że wcześniej trzeba zainstalować python3)
+
+teraz zmodyfikuj pytong.py, dodając na początku linię #!/usr/bin/env python
+
+spróbuj teraz zrobić
+
+./pytong.py
+
+udało się, bo w pierwszej linii podając ścieżkę do interpretera, nie trzeba pisać python3 przed nazwą skryptu.
+
+
+Zadanie
+
+Stwórz skrypt w pythonie, który wypisuje jakąś macierz 3x3, a następnie za pomocą ciągu poleceń linuxowych wypisz środkową kolumnę
+posortowaną rosnąco do pliku wynik.txt
+przydatne polecenia: cut, sort
+(google + man cut, man sort)

@@ -1,0 +1,104 @@
+terminal w Ubuntu: Ctrl + Alt + T
+
+pwd - aktualna ścieżka
+
+cd Desktop - changes directory to Desktop
+
+spróbuj też cd /Desktop i cd ./Desktop
+
+potem spróbuj cd home
+
+potem cd ~
+
+potem cd ..
+
+potem cd ~, a następnie cd ../..
+
+ls - lists files in actual directory
+
+mkdir folder - makes directory called 'folder'
+
+touch plik - tworzy pusty plik o nazwie 'plik'
+
+rm plik - removes file called 'plik'
+
+spróbuj taki ciąg komend:
+
+ls
+
+touch .cosiedzieje
+
+ls
+
+co się stało?
+
+a teraz spróbuj tego: ls -a
+
+co się stało? sprawdź co robi opcja -a wpisując 
+
+man ls
+
+man (manual) to instrukcja dla danej komendy, żeby wyjść z manuala naciśnij 'q'.
+
+pliki zaczynające się od znaku kropki to pliki ukryte (z reguły zawierają jakieś konfiguracje, np .git)
+
+
+wpisz w terminal echo "siema"
+
+następnie echo -n "siema"
+
+następnie echo "siema\nmordo"
+
+następnie echo -e "siema\nmordo"
+
+następnie echo -n -e "siema\nmordo"
+
+Znak '\n' w linuxie jest znakiem nowej linii.
+
+Parametry komendy można łączyć, na przykład zamiast -n -e pisać -ne.
+
+spróbuj echo -ne "siema\nmordo"
+
+poszukaj opcji -n, -e w manualu (man echo)
+
+------------------------------------------------------------------
+
+wpisz w terminal echo "cos dziwnego" > pliczek
+
+a następnie ls
+
+powinien powstać plik o nazwie 'pliczek'
+
+wpisz cat pliczek
+
+a potem cat pliczek pliczek
+
+cat jest skrótem od concatenate, czyli od konkatenacji kilku plików w jeden, ale z reguły używamy go do wyświetlenia zawartości jednego pliku.
+
+wpisz pwd > pliczek2
+
+a następnie cat pliczek2 (może się domyślasz zawartości pliczek2?)
+
+wpisz pwd >> pliczek2
+
+a następnie cat pliczek2
+
+wpisz echo ":(" > pliczek2
+
+a następnie cat pliczek2 (może się domyślasz zawartości pliczek2?)
+
+wpisz cat /etc/passwd
+
+wpisz cat /etc/passwd | head
+
+wpisz cat /etc/passwd | head -n 3
+
+wpisz cat /etc/passwd | tail
+
+
+Zadanie:
+
+za pomocą terminala utwórz na pulpicie folder o nazwie 'folder', a w nim plik 'kopytko.txt'.
+Umieść w nim ostatnie 5 wierszy pliku /etc/passwd, z dodaną ostatnią linią o treści "KONIEC".
+Po skończonej pracy usuń cały folder (spróbuj najpierw rm, potem google: linux how to remove directory)
+
