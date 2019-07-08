@@ -116,5 +116,5 @@ podpowiedzi:
 użyj programu wget, z opcją r (może w manualu coś będzie)
 zauważ, że nie chcesz pobierać zdjęć z serwera, bo raczej w nich nie znajdziesz nic o rowerach
 (swoją drogą, polecam sprawdzić kiedyś 'cat jakieszdjecie.jpg')
-jeśli pobieranie strony będzie zbyt wolne, poczytaj
+jeśli pobieranie strony będzie zbyt wolne, poczytaj (opcja -A)
 https://serverfault.com/a/355735
