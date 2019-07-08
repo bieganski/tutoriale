@@ -1,0 +1,105 @@
+stwórz katalog o nazwie 'test', a w nim pliki ułożone w sposób następujący:
+
+.
+├── dir1
+│   └── file1
+├── dir2
+│   └── dir3
+│       └── dir4
+│           └── dalekiplik
+└── file0
+
+zainstaluj program tree (sudo apt install tree)
+i wykonaj polecenie 'tree' w folderze 'test'.
+
+wynik polecenia powinien się zgadzać z powyższym schematem.
+
+teraz wykonaj tree -L 2
+
+sprawdź w manualu co robi opcja -L.
+
+
+będąc w korzeniu (korzeniem nazywamy katalog głowny, np '/' dla ścieżki '/home/mateusz/',
+w naszym przykładzie korzeniem będę nazywał folder 'test') uruchom polecenia: 
+
+find .
+
+find dir1
+
+find . -type d
+
+find . -type f
+
+
+za pomocą programu nano zmień zawartość pliku file1 na poniższą:
+
+abc
+utkam
+la
+ta
+re
+
+wykonaj polecenia:
+
+cp dir1/file1 dir2/nowy1
+mv file0 filezero
+
+za pomocą polecenia tree sprawdź co się zmieniło
+
+cp - skrót od copy
+mv - skrót od move
+
+
+za pomocą polecenia head, zapisz w pliku 'dalekiplik' zawartość 3 pierwszych wierszy pliku 'file1'
+
+
+teraz wpisz
+
+find . | grep file
+
+find . | grep -v file
+
+sprawdź w manualu grepa co robi opcja -v.
+
+grep potrafi dużo więcej, jest bardzo przydatny gdy szukamy wszystkich plików zawierających
+jakiś napis, na przykład 'zmienna = 42'.
+
+będąc cały czas w korzeniu, wpisz
+
+grep -r . -e "abc"
+
+grep -r . -e "ka"
+
+grep -l -r . -e "abc"
+
+grep -r . -e "ABC"
+
+grep -i -r . -e "ABC"
+
+sprawdź co robią opcje r, l, i
+
+
+wpisz:
+echo "nazywam sie grzegorz braun" | wc -w
+
+echo "nazywam sie grzegorz braun" | wc -c
+
+find . | wc -l
+
+wc dir1/file1 -w
+
+wc jest skrótem od word count.
+sprawdź co robią opcje -w, -c, -l.
+
+
+Zadanie
+dla wszystkich plików w folderze 'test',  wypisz za pomocą 
+jednego ciągu poleceń ile linii zawierają.
+
+podpowiedź:
+przyda się polecenie xargs
+np.
+find . -type f | xargs cat 
+zadziała tak, że dla każdej linii wyniku polecenia find, zaaplikuje ją do polecenia cat (sprawdź to)
+
+
