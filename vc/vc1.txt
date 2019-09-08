@@ -64,6 +64,23 @@ rozwiąż wszystkie konflikty (fajne skróty klawiszowe - F7 oraz Shift + F7)
 
 I to wszystko!
 
+
+
+--- uwaga na koniec:
+
+po co to shelve itp.?
+
+ano po to, że często ma miejsce sytuacja następująca:
+
+pracujesz nad czymś, ale nie masz jeszcze na tyle dużo żeby zrobić commita, ale w międzyczasie ktoś wrzucił coś do repo.
+skończysz pracować, chcesz wrzucić to do repo, ale się nie da, bo okazuje się że masz u siebie na kompie nieaktualną wersję repo.
+wówczas robisz tak:
+odkładasz te zmiany które zrobiłeś, na przykład robiąc z nich patcha (albo shelvując, ale to jest to samo)
+z czystym repo robisz 'git pull', pobierasz aktualną wersję
+unshelvujesz zmiany albo nakładasz patcha ze swoimi zmianami, jednocześnie rozwiązując konflikty, które mogły się pojawić w związku z pobraniem nowej wersji zmienionej
+przez kogoś innego
+robisz 'git push' z powodzeniem, auu!
+
 -------
 
 Twoim zadaniem jest:
@@ -83,5 +100,4 @@ zamieniłem na com.milion itp., jednak zmian w kodzie było w tym prawie wcale (
 
 
 Powodzenia kumplu!
-
 
