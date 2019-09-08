@@ -1,0 +1,87 @@
+jak się pewnie już zorientowałeś, zrobienie na repozytorium pulla (ściągnięcie na swój komputer wersji z serwera)
+wymaga, abyś miał na komputerze "czystą" wersję repozytorium, czyli zgodną z którymkolwiek commitem.
+
+spójrz na historię commitów, za pomocą narzędzia tig (w razie potrzeby je zainstaluj).
+
+otwórz jakiś projekt w Android Studio (najlepiej taki, gdzie pracuje więcej niż jedna osoba na jakimś branchu), zapozaj się z Annotate
+(google: intellij annotate)
+wyjaśnienie: intelliJ jest IDE napisanym w Javie, opiera się na nim bardzo dużo innych IDE, takich jak PyCharm albo właśnie Android Studio,
+dlatego zamiast googlać "android studio", czasem lepiej wyszukać "intellij"
+
+zwróć uwagę na kolory obok numerów linii (np. nowododana albo usunięta linia), są one związane z różnicą twojej lokalnej wersji
+z wersją z ostatniego commita z gita.
+
+zapoznaj się z zakładką Version Control w dolnym pasku (tym samym w którym jest Logcat)
+
+wypróbuj Shelve/Unshelve Changes (google: intellij shelving)
+
+zapoznaj się z pojęciem Changelisty, stwórz jakieś dwie changelisty, popróbuj przenosić pliki między nimi
+
+zrób patcha dla jednej z changelist, obejrzyj wynikowy plik .patch
+
+zresetuj wszystkie zmiany jakie zrobiłeś (np git reset --hard)
+
+za pomocą Android Studio zaaplikuj stworzonego uprzednio przez siebie patcha (Apply patch)
+
+
+-----------
+
+okej, powyższe rzeczy były tylko wstępem, Twoje zadanie sprowadza się do następującej rzeczy:
+
+połączyć zmiany z dwóch branchy (u nas 'dev' i 'matinek')
+
+git ma do tego komendę - git merge
+
+przejdź na brancha matinek i wpisz
+
+git merge origin/dev
+
+wówczas naniesione zostaną Twoje zmiany na to, co ja zrobiłem. zauważ, że podczas takiej akcji mogą pojawić się konflikty, jeśli obaj
+zmieniliśmy ten sam plik.
+
+spójrz na zawartość pliku app/build.gradle
+
+tam, gdzie pojawiły się konflikty, git umieścił nagłówki 
+<<<<<<< HEAD
+
+zmiany
+
+>>>>>>> cokolwiek
+
+to zaszłość sprzed 100 lat, kiedy ludzie jeszcze nie używali IDE, a konflikty usuwali ręcznie. wówczas szukali wszystkich linijek, które zawierały 
+napisy "<<<<<<<" i ręcznie usuwali złą wersję, a zostawiali tę, która im odpowiadała.
+
+obecnie tę robotę robi za nas IDE.
+
+ważna uwaga - zauważ że merga możesz zrobić będąc zarówno na devie jak i na matinku - warto sobie uświadomić, że
+zmiany z tej drugiej gałęzi nakładają się na tę na której jesteś, nie na odwrót.
+
+ok, przywróć lokalną wersję repo do porządku (git reset --hard).
+
+zrób jeszcze raz git merge, tym razem za pomocą Android Studio.
+
+rozwiąż wszystkie konflikty (fajne skróty klawiszowe - F7 oraz Shift + F7)
+
+I to wszystko!
+
+-------
+
+Twoim zadaniem jest:
+
+* utworzyć nowego brancha o nazwie 'beres', jako odgałęzienie od brancha 'matinek'
+dlaczego matinek?
+ano dlatego, że po pierwszym rozgałęzieniu deva i matinka, zrobiłem ważne zmiany w strukturze projektu (np. com.example
+zamieniłem na com.milion itp., jednak zmian w kodzie było w tym prawie wcale (raczej zmiany w nazwach plików/folderów))
+
+* na brancha 'beręs' nanieśc DOBRE zmiany z brancha 'dev' (dobre, w sensie związane z obsługą jsonów, nie chcemy zmian związanych z com.example czy coś)
+
+* upewnić się, że to co zrobiłeś działa poprawnie, w sensie odpala się na telefonie z Androidem
+
+* zrobić pusha z branchem 'beres'
+
+* po sprawdzeniu przeze mnie że jest ok, dalej pracujesz na 'beres' a 'dev' usuwasz i o nim zapominamy
+
+
+Powodzenia kumplu!
+
+
