@@ -1,0 +1,108 @@
+related zagwostka - gdy masz klasę Pojazd i klasy Samochod, Rower dziedziczace po klasie Pojazd
+oraz funkcję zrob_cos(Pojazd p), to poprawny jest następujący kod:
+
+Pojazd p = new Pojazd();
+Samochod s = new Samochod();
+Rower r = new Rower();
+
+zrob_cos(p);
+zrob_cos(s);
+zrob_cos(r);
+
+
+-----------------------------------------------
+
+Dobra, wróćmy do Androida. Jest sobie Activity - potrzebujemy intuicji, czym jest to Activity.
+Jest to niejako zbiór rzeczy potrzebnych do wyświetlenia jednego widoku aplikacji.
+Najlepiej o tym myśleć, jako o narzędziu które umie komunikować się z samym systemem Android
+(i dzięki temu na przykład wyświetlać powiadomienia, np. jak dzwoni ci budzik), ale też ma dostęp
+do wsyzstkich swoich podkomponentów, na przykład podklas View.
+WAŻNE:
+Jest też coś takiego jak Context.
+Zadanie - znaleźć definicję klasy Context. 
+Podpowiedź - dwa razy szybko nacisnąć Shift w Android Studio.
+
+----------------------------------------------
+
+Context to klasa reprezentująca jądro aktywności, czyli wszystkie rzeczy potrzebne do komunikacji
+ze światem zewnętrznym (czyli systemem Android, np do mikrofonu, głośnika, systemu powiadomień),
+posiada zapisane ustawienia użytkownika i tak dalej.
+
+ACTIVITY DIZEDZICZY PO CONTEXTCIE.
+
+To znaczy, każda Activity Posiada też dostęp (inaczej: zawiera w sobie) Context.
+Wydaje się to sensowne na mocy powyższych rozważań.
+
+mając funkcję f(Context c), możesz ją wywołać dla f(Activity) (dlaczego?)
+
+
+----------------------------------------------
+
+Dobra.
+
+To co widzisz na ekranie telefonu - To podklasy klasy View, np LinearViw, ImageView i tak dalej.
+Każdy widok działa w obrębie jakiejś aktywności (DOKŁADNIE JEDNEJ). Zatem wydaje się logiczne, żeby
+posiadał metodę getActivity(). I faktycznie tak jest.
+
+Fragmenty - sytuacja jest identyczna jak z widokami. Każdy działa w obrębie JEDNEJ aktywności, 
+zatem posiada metodę getActivity. Tak samo fragment ma swój View, który inflatuje.
+Czym zatem się różni od View?
+
+WAŻNA UWAGA -
+gdy przekręcasz ekran telefonu, zmienia się orientacja (na homoseksualną ha ha).
+uwaga: wtedy AKTYWNOŚĆ SIĘ RESETUJE. To znaczy, aktualna jest niszczona, oraz tworzona jest
+jej nowa instancja. Od nowa jest wołany konstrktor (np. new Main Activity()), od nowa robione
+setContentView(), czyli od nowa tworzone są wszystkie View do niej należące.
+UWAGA - to gówno jest naprawdę wolne.
+
+Do poczytania:
+Google -> android activity lifecycle
+
+----------------------------------------------
+
+Okej, to teraz różnica między widokiem a fragmentem:
+Podczas tworzenia nowej aktywności, tworzone są widoki od nowa, ale
+w przypadku fragmentów DA SIĘ TEGO UNIKNĄĆ.
+przykład zastosowania:
+mamy aplilację, która wykonuje jakieś trudne obliczenia, a wynik wyświetla w widoku.
+w przypadku obrotu ekranu, nie chcemy stracić wyników, ale lipa bo je stracimy.
+natomiast jak zapiszemy we fragmencie, to możemy je przechować, bo fragmenty nie są 
+resetowane, a jedynie jakby usypiane (przy resecie aktywności).
+Fragment posiada metody 
+onSaveInstanceState(Bundle state)
+i onRestoreInstanceState(Bundle state)
+(state to po prostu słownik, jakiś zbiór wartości do przechowania), które są wywoływane
+gdy fragment idzie spać i się budzi.
+Można na przyklad wyniki obliczeń zapisać w tym bundlu i po obrocie ekranu wyświetlić od nowa,
+bez konieczności wykonania obliczeń.
+
+UWAGA: Ten przykład jest nieco przejaskrawiony, bo Activity też ma te metody więc 
+sama też potrafi zapisać/wczytać stan.
+
+--------------------------------------
+
+Dobra, to teraz sedno problemu.
+Masz aplikację w której coś przeklikujesz, co chwilę przenosi cię do innego ekranu, coś wpisujesz, 
+klikasz "dalej", potem "cofnij", i tak w kółko. Możliwe rozwiązania - 
+przy kazdym kliknięciu Dalej twórz nową aktywność i rób Intent(this, NowaAktywność)
+(Intent odkłada sobie gdzieś z tyłu obecną aktynwość (do doczytania: back stack) i uruchamia nową)
+
+To gówno jest wolne jak MyPhone z 2014 i tak pisali aplikacje ludzie jeszcze przed 2014 rokiem.
+
+Rozwiązanie:
+JEDNA aktywność na całą aplikację, po przycisku "Dalej" albo "Cofnij" jedynie "wymienia" (ang. replace)
+się Fragmenty. W naszym przypadku, mamy listę produktów (jako fragment!), klikamy jeden z nich, i w tym momencie
+odpala się kawałek kodu:
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_layout, new PromTileFragment());
+        ft.commitNow();
+Szuka on widoku o id main_layout, patrzy na jego dzieci (podwidoki) i wymienia pierwszego (chyba) na 
+nowostworzony PromTileFragment, który u nas jest szczegółowym opisem produktu.
+
+I teraz tak: ktoś wziął to rozwiązanie, ładnie zakodził i zrobił z tego bibliotekę NavigationUI,
+z której korzystamy (bo mamy prawie 2020 rok). 
+Dzięki niej nie musimy robić żadnych fargmento-transakcji, nie musimy nic 'replacować', a jedynie używamy
+metody navigate().. i podobnych.
+
+Jak działa ta biblioteka - musisz ogarnąć sam, porównaj kod z repo android i android-nowy.
+
