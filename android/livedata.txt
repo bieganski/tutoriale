@@ -1,0 +1,64 @@
+## UI thread:
+
+Jak wiemy, w XXI wieku procesory mają po kilka rdzeni i wątków.
+Każdy z nich wykonuje obliczenia (instrukcje, np "a = 1", "i++").
+Obliczenia dzieją się zatem równolegle.
+W aplikacjach na telefon, jeden rdzeń jest potrzebny żeby reagować na akcje użytkownika
+(np. dotknięcie ekranu). Kod ten można wyobrażać sobie tak:
+
+while (True) {
+    if (uzytkownik wykonal akcje) {
+        obsluz akcje();
+    }
+}
+
+to teraz pytanie. co się dzieje w momencie, w którym obsłużenie akcji trwa długo?
+wyobraźmy sobie, że obsłużenie akcji łączy sie z internetem, wysyła zapytanie, czeka
+na odpowiedź, dostawszy odpowiedź wyświetla ją i returnuje.
+W całym tym trwającym nawet kilka sekund procesie, wykonuje się kod funkcji obsluz_akcje().
+W związku z tym nie robi się kolejny obrót pętli, a program przestaje odpowiadać na akcje użytkownika.
+Uzytkownik klika i klika i nic sie nie dzieje, bo akcja jest obslugiwana.
+TEGO NIE CHCEMY.
+Co się zatem robi?
+WAZNE:
+> Każdą czasochłonną operację należy wykonać na osobnym rdzeniu procesora.
+Wówczas funkcja obsluz_akcje() niejako _deleguje_ zadanie obsluzenia do innego wątku,
+po czym robi _return_, zeby mozna bylo zrobic kolejny krok w pętli i zareagować na akcje użytkownika.
+
+
+## Podstawy:
+o LiveData można myśleć jako o obietnicy (jeśli wcześniej programowałeś i spotkałeś się 
+z pojęciem future/promise to wiesz o co chodzi). Obiekt typu LiveData<Integer> mówi:
+"być może już jestem Integerem, ale niekoniecznie, jak już nim będę to cię poinformuję".
+Podczas działania programu wykonuje się kod.
+Kod wykonuje się szybko.
+Operacje I/O (input output) wykonują się BARDZO wolno.
+Przykładowo, 
+> odczytanie jednego słowa z pliku trwa tyle, co 1000 normalnych instrukcji!
+
+LiveData działa tak: 
+Wyobrazmy sobie, że mamy na telefonie bazę danych SQL, z której musimy odczytać
+jakąś wartość Boolean. Mamy specjalną funkcję, która ma typ: 
+public LiveData<Boolean> odczytaj();
+
+odczyt z bazy danych trwa BARDZO długo. Jednak udaje się to ominąć poniższym kodem:
+
+```
+LiveData<Boolean> wynik = odczytaj();
+int a = 2137;
+```
+ Co tu się dzieje? Otóż ten kod wykonuje się SZYBKO, zatem po dosłownie chwili na zmienną
+a przypisze się wartość. Ale dlaczego, operacja odczytaj trwa długo?
+Ano dlatego, że została ona ZLECONA innemu rdzeniowi.
+Dostaliśmy obietnicę, że kiedyś na zmiennej _wynik_ będzie odczytana z bazy wartość.
+
+WAŻNE:
+> skąd mam wiedzieć, że już wartość została obliczona?
+LiveData posiada metodę _observe_, której jako parametr podaje się listenera, czyli funkcję,
+która zostanie wywołana gdy wartość pod LiveData się zmieni np.:
+wynik.observe(nowa_wartosc -> {Log.w("TAG", "zmienila sie wartosc na " + Boolean.toString(nowa_wartosc))});
+notacja x -> instr nazywa się lambdą i odpowiada funkcji f(x) {instr;}.
+
+
+## O czym pamiętać używając LiveData:
+TODO
