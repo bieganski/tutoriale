@@ -15,5 +15,9 @@ podpowiedź: floating point
 4. czyta od użytkownika liczbę i wypisuje jej dwukrotność
 podpowiedź: cpp read value from stdin
 
-5. posiada funkcję 'potega(int x, int n)' obliczającą x^n, oblicza i wypisuje 2^10.
-podpowiedź: cpp functions
+5. wypisuje w pętli liczby od 1 do 20. podpowiedź: cpp for loop
+
+6. czyta od uzytkownika liczbę x i wypisuje w pętli liczby od 1 do x odzielone przecinkami 
+
+7. posiada funkcję 'potega(int x, int n)' obliczającą x^n, oblicza i wypisuje 2^10.
+
